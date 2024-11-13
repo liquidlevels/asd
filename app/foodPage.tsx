@@ -8,37 +8,56 @@ const foodPage = () => {
   const data = Array.isArray(info) ? info[0] : info;
   const dataParser = JSON.parse(data);
   return (
-    <ScrollView style={{ backgroundColor: "#fff5e0" }}>
-      <Text style={styles.title}>
-        {dataParser.Title}
-        {/* {dataParser.Emoji} */}
-      </Text>
-
+    <ScrollView style={{ backgroundColor: "#fff5e0", height: "100%" }}>
+      <Text style={styles.title}>{dataParser.Title}</Text>
       <View
         style={{
           paddingTop: 15,
         }}
       >
-        <Text style={styles.text}>
+        <Text
+          style={{ alignSelf: "center", fontWeight: "bold", color: "#190933" }}
+        >
           Typical Meal Time: {dataParser.Typical_Meal_Time}
         </Text>
       </View>
 
-      <Text
-        style={{
-          fontWeight: "bold",
-          color: "#190933",
-          paddingHorizontal: 40,
-          paddingTop: 20,
-        }}
-      >
-        Dishes
-      </Text>
-      <FlatList
+      <Text style={styles.subtitle}>Dishes</Text>
+      {dataParser.Dishes.map((dish: any, index: number) => (
+        <Link
+          href={{
+            pathname: "/recipePage",
+            params: { info: JSON.stringify(dish) },
+          }}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            marginVertical: 5,
+            marginHorizontal: 30,
+            paddingVertical: 10,
+            paddingLeft: 10,
+            backgroundColor: "#ee9e8e",
+            // backgroundColor: "#191919",
+            borderRadius: 2,
+          }}
+          key={index}
+        >
+          <Text style={styles.text}>{dish.Name}</Text>
+        </Link>
+      ))}
+      {/* <FlatList
         data={dataParser.Dishes}
-        renderItem={(itemData) => (
-          <View
+        keyExtractor={(itemData) => itemData.Name}
+        renderItem={({ item }) => (
+          <Link
+            href={{
+              pathname: "/recipePage",
+              params: { info: JSON.stringify(item) },
+            }}
             style={{
+              display: "flex",
               marginVertical: 5,
               marginHorizontal: 30,
               paddingVertical: 10,
@@ -46,24 +65,31 @@ const foodPage = () => {
               borderRadius: 2,
             }}
           >
-            <Link href={"/recipePage"} style={styles.text}>
-              <Text>{itemData.item}</Text>
-            </Link>
-          </View>
+            <Text style={styles.text}>{item.Name}</Text>
+          </Link>
         )}
-      />
+      /> */}
 
-      <Text
-        style={{
-          fontWeight: "bold",
-          color: "#190933",
-          paddingHorizontal: 40,
-          paddingTop: 20,
-        }}
-      >
-        Popular Ingredients
-      </Text>
-      <FlatList
+      <Text style={styles.subtitle}>Popular Ingredients</Text>
+      {dataParser.Popular_Ingredients.map(
+        (ingredient: string, index: number) => (
+          <View
+            style={{
+              marginVertical: 5,
+              marginHorizontal: 30,
+              paddingVertical: 10,
+              backgroundColor: "#ffdbc3",
+              borderRadius: 2,
+              paddingLeft: 10,
+            }}
+            key={index}
+          >
+            <Text style={styles.text}>{ingredient}</Text>
+          </View>
+        )
+      )}
+
+      {/* <FlatList
         // style={{ backgroundColor: "#f07167" }}
         data={dataParser.Popular_Ingredients}
         renderItem={(itemData) => (
@@ -79,7 +105,7 @@ const foodPage = () => {
             <Text style={styles.text}>{itemData.item}</Text>
           </View>
         )}
-      />
+      /> */}
     </ScrollView>
   );
 };
@@ -91,8 +117,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#190933",
   },
+  subtitle: {
+    paddingHorizontal: 40,
+    paddingTop: 20,
+    // alignSelf: "center",
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#190933",
+  },
   text: {
-    alignSelf: "center",
+    // alignSelf: "center",
     fontWeight: "bold",
     color: "#190933",
   },

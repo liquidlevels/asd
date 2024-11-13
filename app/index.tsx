@@ -10,7 +10,7 @@ export default function Index() {
 
   useEffect(() => {
     const fetchData = () => {
-      const dataJSON = require("@/data/cuosines.json");
+      const dataJSON = require("@/data/newcuosines.json");
       setCountryData(
         Object.keys(dataJSON).map((key) => ({
           key: key,
